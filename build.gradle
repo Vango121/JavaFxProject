@@ -6,14 +6,19 @@ plugins {
 repositories {
     mavenCentral()
 }
-
+mainClassName = 'org.openjfx.Main'
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
 dependencies {
-    implementation 'mysql:mysql-connector-java:6.0.+'
 }
 
 javafx {
     version = "13"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
-
-mainClassName = 'org.openjfx.MainApp'
